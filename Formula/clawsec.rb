@@ -1,8 +1,8 @@
 class Clawsec < Formula
   desc "Encrypted netcat: password-authenticated tunnels, file transfer, SOCKS5, VPN"
   homepage "https://github.com/LF3551/ClawSec"
-  url "https://github.com/LF3551/ClawSec/archive/refs/tags/v3.0.0.tar.gz"
-  sha256 "da839d751181105feeb5cc069c5f667c7c4a72a9158548785092ea3cce66c8c1"
+  url "https://github.com/LF3551/ClawSec/archive/refs/tags/v3.1.0.tar.gz"
+  sha256 "3d9ad6e2cb41f67c0c28305babf33469f69b369bfff460251d8e189c4f5e76c1"
   license "BSD-3-Clause"
   head "https://github.com/LF3551/ClawSec.git", branch: "main"
 
