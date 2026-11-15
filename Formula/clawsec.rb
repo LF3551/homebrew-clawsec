@@ -37,8 +37,9 @@ class Clawsec < Formula
     server = spawn bin/"clawsec", "-l", "-p", port.to_s, "-k", password,
                    "--recv", (testpath/"inbox").to_s, [:out, :err] => File::NULL
     sleep 2
-    system bin/"clawsec", "-k", password, "--send", (testpath/"payload.bin").to_s,
-           "127.0.0.1", port.to_s, [:out, :err] => File::NULL
+    output = shell_output("#{bin}/clawsec -k #{password} --send #{testpath}/payload.bin " \
+                          "127.0.0.1 #{port} 2>&1")
+    assert_match "SHA-256 verified", output
     Process.wait(server)
     assert_equal (testpath/"payload.bin").read, (testpath/"inbox/payload.bin").read
   end
