@@ -1,0 +1,29 @@
+name: Test formula
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, macos-15-intel, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Homebrew (taps this repository)
+        uses: Homebrew/actions/setup-homebrew@ceec4e8419bb3c97ce96e9dda7738499ed5f869d # main
+
+      - name: Build from source
+        run: brew install --build-from-source lf3551/clawsec/clawsec
+
+      - name: brew test (encrypted file transfer on localhost)
+        run: brew test lf3551/clawsec/clawsec
+
+      - name: brew audit
+        run: brew audit --strict lf3551/clawsec/clawsec
