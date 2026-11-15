@@ -19,11 +19,11 @@ jobs:
       - name: Set up Homebrew (taps this repository)
         uses: Homebrew/actions/setup-homebrew@ceec4e8419bb3c97ce96e9dda7738499ed5f869d # main
 
-      # The macos-15-intel image ships a linked openssl@1.1 whose bin/openssl
-      # blocks linking openssl@3 (a runner quirk, not a formula problem)
-      - name: Unlink preinstalled openssl@1.1
-        if: runner.os == 'macOS'
-        run: brew unlink openssl@1.1 2>/dev/null || true
+      # The macos-15-intel image ships a preinstalled openssl@1.1 whose
+      # bin/openssl symlink blocks linking openssl@3 (a runner quirk, not a
+      # formula problem): install the dependencies first and overwrite it.
+      - name: Install dependencies
+        run: brew install openssl@3 argon2 || brew link --overwrite openssl@3
 
       - name: Build from source
         run: brew install --build-from-source lf3551/clawsec/clawsec
